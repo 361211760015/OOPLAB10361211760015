@@ -14,7 +14,7 @@ class EmployeeDAOImpl implements employeeDAO {
     public static final String ADD_EMP = "insert into Employee" +
             "(empID,name,position,salary) values (?,?,?,?)";
     public static final String UPDATE_EMP = "update Employee set" +
-            "name = ?, position = ?, salary = ? where empID = ?";
+            " name = ?, position = ?, salary = ? where empID = ?";
     public static final String DELETE_EMP = "delete from Employee" +
             " where empID = ?";
     public static final String FIND_ENP_BY_ID = "select * from Employee" +
