@@ -6,28 +6,69 @@ public class CompanyMangeement {
         //create interface instant
         employeeDAO dao = EmployeeDAOImpl.getInstance();
 
-
         //Get all Employee
         displayAllEmployee (dao);
-        addNewEmployee (dao);
+        //add new Employee
+        //addNewEmployee(dao);
+        //find Employee by ID
+        findEmployeeByID(dao);
+        //update Employee by ID
+        updateEmployeeByID(dao);
+        //delete Employee by ID;
+        deleteEmployeeByID(dao);
 
     }//main
+    private static void deleteEmployeeByID(employeeDAO dao) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Delete employee with ID: ");
+        int id = Integer.parseInt(sc.nextLine().trim());
+        dao.deleteEmp(id);
+
+    }
+    private static void updateEmployeeByID(employeeDAO dao){
+        Employee emp = findEmployeeByID2(dao);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Update new salary for employee ID "
+                +emp.getEmpID()+":");
+        double ns = Double.parseDouble(sc.nextLine().trim());
+        emp.setSalary(ns);
+        dao.updateEmp(emp);
+        System.out.println("Update employee with ID: "+emp.getEmpID());
+    }
+    private static  Employee findEmployeeByID2(employeeDAO dao){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter an employee ID: ");
+        int id = Integer.parseInt((sc.nextLine().trim()));
+        Employee emp = dao.findEmp(id);
+        System.out.println(emp.toString());
+
+        return emp;
+    }
+
+    private static void findEmployeeByID(employeeDAO dao) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter an employee ID: ");
+        int id = Integer.parseInt((sc.nextLine().trim()));
+        Employee emp = dao.findEmp(id);
+        System.out.println(emp.toString());
+    }
+
 
     private static void addNewEmployee(employeeDAO dao) {
-        Scanner sc =  new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         //input data
         System.out.println("Enter employee id: ");
         int id = Integer.parseInt(sc.nextLine().trim());
         System.out.println("Enter employee name: ");
-        String name = sc .nextLine().trim();
+        String name = sc.nextLine().trim();
         System.out.println("Enter employee position: ");
         String position = sc.nextLine().trim();
-        System.out.println("Enter employ salary: ");
-        Double salary = Double.parseDouble(sc.nextLine().trim());
-        //inser data to data to database
+        System.out.println("Enter employee salary: ");
+        double salary = Double.parseDouble(sc.nextLine().trim());
+        //insert data to database
         Employee newEmp = new Employee(id,name,position,salary);
         dao.addEmp(newEmp);
-    }
+        }
 
     private static void displayAllEmployee(employeeDAO dao) {
         List<Employee> myEmp = dao.gatAllEmp();
@@ -35,4 +76,6 @@ public class CompanyMangeement {
             System.out.println(emp.toString());
         }
     }
+
+
 }//class

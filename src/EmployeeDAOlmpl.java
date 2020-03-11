@@ -13,16 +13,17 @@ class EmployeeDAOImpl implements employeeDAO {
     public static final String GET_All_emp = "select * from Employee";
     public static final String ADD_EMP = "insert into Employee" +
             "(empID,name,position,salary) values (?,?,?,?)";
-    public static final String UPDATE_EMP = "update Employee det" +
-            "name = ?, position = ?, salary = ? where id = ?";
+    public static final String UPDATE_EMP = "update Employee set" +
+            "name = ?, position = ?, salary = ? where empID = ?";
     public static final String DELETE_EMP = "delete from Employee" +
-            "where empID = ?";
+            " where empID = ?";
     public static final String FIND_ENP_BY_ID = "select * from Employee" +
-            "where empID = ?";
+            " where empID = ?";
     //create class instant
     private static EmployeeDAOImpl instant = new EmployeeDAOImpl();
 
     public static EmployeeDAOImpl getInstance(){
+
         return instant;
 
     }
@@ -149,29 +150,28 @@ class EmployeeDAOImpl implements employeeDAO {
             conn = DriverManager.getConnection(url);
             PreparedStatement ps = conn.prepareStatement(FIND_ENP_BY_ID);
             //set parameter
-            ps.setInt(1, id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()){
                 int empid = rs.getInt(1);
                 String name = rs.getString(2);
                 String position = rs.getString(3);
                 double salary = rs.getDouble(4);
 
-                emp = new Employee(empid, name, position, salary);
-            } else{
+                emp = new Employee(empid,name,position,salary);
+
+            }else{
                 System.out.println("Cloud not found Employee" +
-                        "with empID " + id);
+                        "with empID" +id);
             }
             rs.close();
             ps.close();
             conn.close();
-        }
-
-            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return emp;
+
     }
-}//class
+}
